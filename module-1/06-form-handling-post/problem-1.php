@@ -9,6 +9,16 @@ include 'includes/header.php';
 
 */
 
+// For debugging purposes, if you ever need to check what values are being stored inside of an array, you can use ...
+
+// foreach ($_POST as $key => $value) {
+//     echo "<p>$key : $value</p>";
+// }
+
+// ... or you can use a simple var_dump().
+
+// var_dump($_POST);
+
 // Instead of using the following if/else structure to initialise our variable ...
 
 // if (isset($_POST['number'])) {
