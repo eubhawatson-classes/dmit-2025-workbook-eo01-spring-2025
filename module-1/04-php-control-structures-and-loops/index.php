@@ -222,6 +222,18 @@
           echo "<p>Counter value: $i</p>";
         }
       ?>
+
+      <h3 class="display-6 mb-4">For Each Loops</h3>
+
+      <?php
+      
+      // For Each loops are special: they're made to work specifically with arrays. Here, we're going to use a superglobal array called $_SERVER. This array keeps tonnes of information about the server, its state, and other things related to PHP. While it should never be echoed out to the user, we will use some of its values later on in the course.
+
+      foreach ($_SERVER as $key => $value) {
+        echo "<p>$key : $value</p>";
+      }
+
+      ?>
     </section>
   </main>
 </body>
