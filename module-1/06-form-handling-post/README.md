@@ -35,13 +35,11 @@ It's important to choose the appropriate method based on the intended functional
 
 ### GET
 
-`GET` is the default method if no method attribute is specified. It is commonly used for retrieving data from the server or performing searches. 
+`GET` is the default method if no method attribute is specified. It is commonly used for performing searches or saving the state of a website or application (ex. which page of results you're on). 
 
 `GET` transmits data from one page to another by sending it as part of the URL, called the `query string`. This means that a specific state can be bookmarked, shared, or saved just by saving the URL; however, this also means that the user can directly manipulate things by changing the URL.
 
 Because all of the submitted data is visible in the URL, never use the `GET` method if the form handles any sensitive or personally identifying information, such as email addresses, date of birth, passwords, credit card information, and so forth.
-
-Finally, when are using the GET method, we are limited to a maximum of 2,048 characters, minus the number of characters in the actual path. 
 
 
 ### POST
@@ -76,11 +74,41 @@ We can do this by checking to see if the value for the submit button has been se
 
 ```PHP
     // Is there a value for something with a name of 'submit'?
-    if (isset($_GET['submit'])) { ... }
+    if (isset($_POST['submit'])) { ... }
 
     // Did we get here using the POST method?
     if ($_SERVER['REQUEST_METHOD'] == 'POST') { ... }
 ```
+
+---
+
+
+## Ternary Operators
+
+If we want to use variables anywhere in our page, we must initialise them -- and, when we're writing these assignment statements, they're often based upon some condition. In the case of forms, this is usually whether or not the form has been submitted. 
+
+For example, if we have a form where someone is filling out their job title or position, we might have something like this:
+
+```PHP
+    if (isset($_POST['job'])) {
+        $job = $_POST['job'];
+    } else {
+        $job = "Placeholder";
+    }
+```
+
+In this case, if the user filled out a value for the `job` field (that is, the input with a name of job) and submitted the form, we'll assign that value to a new variable; if not, we'll use a placeholder value. 
+
+But what if you initialising a whole field of variables? Using this if/else structure takes up multiple lines and a lot of space, making the code cumbersome to read. Instead, we might use a ternary statement, which looks like this:
+
+```PHP
+    $job = isset($_POST['job']) ? $_POST['job'] : 'Placeholder';
+```
+
+Here, the first clause (after the `=`) is our condition. After the `?`, we put whatever value we want to assign to `$job` if the condition is met. Finally, after the `:`, we put whatever we want to assign to `$job` if the condition is not met.
+
+This syntax can be a little hard to read at first, but will make initialising multiple variables much quicker.
+
 
 ---
 
