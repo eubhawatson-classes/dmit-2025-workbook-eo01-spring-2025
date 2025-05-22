@@ -102,9 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="alert alert-success col" role="alert">
             <p class="mb-0"><strong>Standard Vowels</strong>: <?php echo $standard_count; ?></p>
         </div>
-        <!-- Y-Vowel Count -->
+        <!-- Y-Words Count -->
         <div class="alert alert-warning col" role="alert">
-            <p class="mb-0"><strong>Y-Vowels</strong>: <?php echo $y_count; ?></p>
+            <p class="mb-0"><strong>Y-Words</strong>: <?php echo $y_count; ?></p>
         </div>
     </div>
 

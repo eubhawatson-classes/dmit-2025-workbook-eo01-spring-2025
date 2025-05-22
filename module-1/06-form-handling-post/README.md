@@ -8,7 +8,7 @@ Each form has two important attributes, which we'll cover much more in depth: `a
 
 ## Form Actions
 
-The `action` attribute specifies what will handle or process the data once the form is submitted. It can be a separate file (ex. `process.php`), or the 
+The `action` attribute specifies what will handle or process the data once the form is submitted. It can be a separate file (ex. `process.php`), or the same page as the form.
 
 If we want the page with the form on it to handle everything, we can use the following value:  
 
