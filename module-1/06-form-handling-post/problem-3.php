@@ -81,7 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="mb-5">
     <div class="mb-3">
         <label for="user-text" class="form-label">Your text:</label>
-        <textarea name="user-text" id="user-text" class="form-control"></textarea>
+        <textarea name="user-text" id="user-text" class="form-control"><?php echo $user_text; ?></textarea>
+
+        <!-- 
+            It's important that our forms retain user input, especially if the user needs to return to the form or correct anything for whatever reason. In order to do this, we can echo out their previously-submitted value into a `value` attribute.
+
+            <input type="text" name="text" id="text" value="<?php echo $user_text; ?>">
+        -->
     </div>
 
     <div class="mb-3">
