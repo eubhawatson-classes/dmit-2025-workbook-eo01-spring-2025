@@ -21,7 +21,7 @@ In PHP, would functions are defined with the keyword *function*, a name, what pa
 			return 'Hello, world!';
 		}
 
-		echo '<p>' . hello_world() . '</p>';
+		echo '<p>' . echo hello_world() . '</p>';
 ```
 
 

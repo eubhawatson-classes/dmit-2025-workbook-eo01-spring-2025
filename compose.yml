@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    image: php:8.2-apache
+    image: php:8.4-apache
     ports:
       - "8080:80"
       # If working with SSL, we can also route port 443.
