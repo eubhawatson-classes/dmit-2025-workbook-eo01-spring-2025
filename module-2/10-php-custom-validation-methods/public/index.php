@@ -29,6 +29,13 @@
                     <h2 class="fw-light">Account Creation</h2>
 
                     <!-- Text Input (Full Name) -->
+                     <div class="mb-4">
+                        <!-- If there's an error message, we'll display it right by the input the user needs to fix. -->
+                        <?php if ($message_name != "") echo $message_name; ?>
+                        <label for="name" class="form-label">Full Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Robin Banks" class="form-control" value="<?= $name; ?>">
+                        <p class="form-text text-light">Enter your full name as it appears on your evil henchperson license or birth certificate. Pseudonyms (e.g., "The Crusher", "Brutal Brutus", or "Dave") can be added later.</p>
+                     </div>
 
                     <!-- Email Input -->
 
