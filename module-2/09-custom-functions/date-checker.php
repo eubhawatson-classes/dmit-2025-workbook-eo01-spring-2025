@@ -33,6 +33,27 @@ function calculate_days_difference($date) {
     return round($difference / (60 * 60 * 24));
 }
 
+// If there is an HTTP POST request and if the user gave us a date, then let's go ahead and call our functions. 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date'])) {
+    $input_date = $_POST['date'];
+
+    // First, we need to validate the date the user gave us. 
+    if (validate_date($input_date)) {
+        // If the date is valid, we can now calculate the days difference. 
+        $days_difference = calculate_days_difference($input_date);
+
+        if ($days_difference < 0) {
+            $message = "The date is in the future. There are " . abs($days_difference) . " days left.";
+        } elseif ($days_difference > 0) {
+            $message = "The date is in the past. It was " . abs($days_difference) . " days ago.";
+        } else { // if $days_difference == 0
+            $message = "The date is today!";
+        }
+    } else {
+        $message = "Invalid date format. Please use the date picker to select a date.";
+    }
+}
+
 ?>
 
 <!doctype html>
@@ -73,6 +94,9 @@ function calculate_days_difference($date) {
             <!-- Result -->
             <section class="col-lg-6 col-md-8">
                 <h2>Your Result</h2>
+                <div class="alert alert-primary">
+                    <p><?= $message; ?></p>
+                </div>
             </section>
         <?php endif; ?>
     </main>
