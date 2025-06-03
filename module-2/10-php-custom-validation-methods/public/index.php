@@ -38,14 +38,51 @@
                      </div>
 
                     <!-- Email Input -->
+                     <div class="mb-4">
+                        <?php if ($message_email != "") echo $message_email; ?>
+                        <label for="email" class="form-label">Email Address:</label>
+                        <input type="text" id="email" name="email" placeholder="example@evilcorp.com" class="form-control" value="<?= $email; ?>">
+                        <p class="form-text text-light">Enter a valid email address that you check frequently - evil plans wait for no one.</p>
+                     </div>
 
                     <!-- Phone Input -->
+                     <div class="mb-4">
+                        <?php if ($message_phone != "") echo $message_phone; ?>
+                        <label for="phone" class="form-label">Phone Number:</label>
+                        <input type="text" id="phone" name="phone" placeholder="123 456 7890" class="form-control" value="<?= $phone; ?>">
+                        <p class="form-text text-light">Provide a valid number where we can reach you. Carrier pigeons are no longer accepted after the law suit.</p>
+                     </div>
 
                     <!-- Date Input -->
+                     <div class="mb-4">
+                        <?php if ($message_dob != "") echo $message_dob; ?>
+                        <label for="dob" class="form-label">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob" class="form-control" value="<?= $dob; ?>">
+                        <p class="form-text text-light">Enter your date of birth. This helps us confirm you're old enough for hazardous henching.</p>
+                     </div>
 
                     <!-- Password Input -->
+                     <div class="mb-4">
+                        <?php if ($message_password != "") echo $message_password; ?>
+                        <label for="password" class="form-label">Secret Password:</label>
+                        <input type="text" id="password" name="password" class="form-control" value="<?= $password; ?>">
+                        <p class="form-text text-light">Choose a strong password, with:</p>
+                        <ul class="form-text text-light">
+                            <li>a minimum of 8 characters</li>
+                            <li>at least one lowercase letter</li>
+                            <li>at least one uppercase letter</li>
+                            <li>at least one number</li>
+                        </ul>
+                        <p class="form-text text-light">Avoid using easy-to-guess passwords, like "password123" or "evil4life".</p>
+                     </div>
 
                     <!-- Password Check -->
+                     <div class="mb-4">
+                        <?php if ($message_password_check != "") echo $message_password_check; ?>
+                        <label for="password_check" class="form-label">Secret Password (Again):</label>
+                        <input type="text" id="password_check" name="password_check" class="form-control" value="<?= $password_check; ?>">
+                        <p class="form-text text-light">Re-enter your password to confirm. Even the most diabolical minds make typos sometimes.</p>
+                     </div>
                 </section>
 
                 <section class="my-5">
