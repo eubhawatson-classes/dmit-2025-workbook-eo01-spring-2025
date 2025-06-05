@@ -136,7 +136,72 @@ if (isset($_POST['submit'])) {
         $form_good = FALSE;
     }
 
-}
+    /*
+        PASSWORD
+
+        If we tell the user that we want certain things within a password (ex. minimum length, a special character, an uppcase letter, etc.), we could compare their input to a suitable regular expression (RegEx).
+
+        However, if do it piece by piece, then we can give the user better feedback on what exactly they're missing. 
+    */
+
+    if (is_blank($password)) {
+        $message_password = "<p class=\"text-warning\">Please provide a password.</p>";
+    } elseif (strlen($password) < 8) {
+        $message_password = "<p class=\"text-warning\">Your password must be at least 8 characters long.</p>";
+    } elseif (!preg_match('/[A-Z]/', $password)) { // uppercase letter
+        $message_password = "<p class=\"text-warning\">Your password must include at least one uppercase letter.</p>";
+    } elseif (!preg_match('/[a-z]/', $password)) { // lowercase letter
+        $message_password = "<p class=\"text-warning\">Your password must include at least one lowercase letter.</p>";
+    } elseif (!preg_match('/[0-9]/', $password)) { // number
+        $message_password = "<p class=\"text-warning\">Your password must include at least one number.</p>";
+    } elseif (!preg_match('/[\W_]/', $password)) { // special character
+        $message_password = "<p class=\"text-warning\">Your password must include at least one special character (!@#$%^&*).</p>";
+    }
+
+    if ($message_password != "") {
+        $form_good = FALSE;
+    }
+
+    /*
+        PASSWORD COMPARISON
+
+        This is relatively straightforward. Here, we want to see if the value that the user typed in the first password field matches (or is equal to) whatever they typed in the second field.
+    */
+
+    if ($password != $password_check) {
+        $message_password_check = "<p class=\"text-warning\">This field does not match the response above. Please try typing your password again.</p>";
+        $form_good = FALSE;
+    }
+
+    /*
+        NUMBERS
+
+        For this particular field, we want to make sure: 
+
+        1. It's a number
+        2. It's a whole number (integer)
+        3. It's within a reasonable range (0-60 years)
+    */
+
+    if (is_blank($experience)) {
+        $message_experience = "<p class=\"text-warning\">Please provide the number of years of experience you have.</p>";
+    } elseif (!is_numeric($experience)) {
+        $message_experience = "<p class=\"text-warning\">Please enter a number.</p>";
+    } elseif (!is_int($experience)) {
+        $message_experience = "<p class=\"text-warning\">Please enter a whole number (an integer).</p>";
+    } elseif ($experience < 0 || $experience > 60) {
+        $message_experience = "<p class=\"text-warning\">Experience must be between 0 and 60 years.</p>";
+    }
+
+    if ($message_experience != "") {
+        $form_good = FALSE;
+    }
+
+    /*
+        
+    */
+
+} // end of 'if the user hit submit'
 
 if ($form_good == TRUE) {
     header("Location: thank-you.php");

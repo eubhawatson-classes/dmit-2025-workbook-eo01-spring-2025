@@ -52,7 +52,7 @@
                         <input type="text" id="phone" name="phone" placeholder="123 456 7890" class="form-control" value="<?= $phone; ?>">
                         <p class="form-text text-light">Provide a valid number where we can reach you. Carrier pigeons are no longer accepted after the law suit.</p>
                      </div>
-
+ 
                     <!-- Date Input -->
                      <div class="mb-4">
                         <?php if ($message_dob != "") echo $message_dob; ?>
@@ -72,6 +72,7 @@
                             <li>at least one lowercase letter</li>
                             <li>at least one uppercase letter</li>
                             <li>at least one number</li>
+                            <li>at least one special character: !@#$%^&*</li>
                         </ul>
                         <p class="form-text text-light">Avoid using easy-to-guess passwords, like "password123" or "evil4life".</p>
                      </div>
@@ -89,6 +90,12 @@
                     <h2 class="fw-light">Qualifications</h2>
 
                     <!-- Number Input (Years Experience) -->
+                     <div class="mb-4">
+                        <?php if ($message_experience != "") echo $message_experience; ?>
+                        <label for="experience" class="form-label">Years of Evil Experience:</label>
+                        <input type="number" id="experience" name="experience" class="form-control" value="<?= $experience; ?>">
+                        <p class="form-text text-light">Round to the nearest whole number between 0-60.</p>
+                     </div>
 
                     <!-- Datalist -->
 
