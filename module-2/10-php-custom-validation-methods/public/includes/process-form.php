@@ -14,6 +14,7 @@ $password_check = (isset($_POST['password-check'])) ? trim($_POST['password-chec
 
 // Qualifications
 $experience = (isset($_POST['experience'])) ? trim($_POST['experience']) : "";
+$region = (isset($_POST['region'])) ?? "";
 $department = (isset($_POST['department'])) ?? "";
 // Because training will be checkboxes and the user may select multiple values, its default value is an empty array, not an empty string. 
 $training = (isset($_POST['training'])) ?? [];
@@ -32,6 +33,7 @@ $message_password = "";
 $message_password_check = "";
 
 $message_experience = "";
+$message_region = "";
 $message_department = "";
 $message_training = "";
 $message_loyalty = "";
@@ -123,11 +125,9 @@ if (isset($_POST['submit'])) {
             if ($dob_object > $minimum_age) {
                 $message_dob .= "<p class=\"text-warning\">You must be at least 18-years-old to apply.</p>";
             }
-
         } else {
             $message_dob .= "<p class=\"text-warning\">Please enter a valid date.</p>";
         }
-
     } else {
         $message_dob .= "<p class=\"text-warning\">Please enter your date of birth.</p>";
     }
@@ -198,13 +198,75 @@ if (isset($_POST['submit'])) {
     }
 
     /*
-        
+        DATA LISTS
+
+        For our data list, we're going to make sure:
+
+        1. the user typed something (presence check);
+        2. their answer isn't too long; and
+        3. it only contains valid characters.
     */
+
+    if (is_blank($region)) {
+        $message_region = "<p class=\"text-warning\">Please enter your preferred region for assignments.</p>";
+    } elseif (strlen($region) > 255) {
+        $message_region = "<p class=\"text-warning\">That region name is a bit too long; try something shorter.</p>";
+    } elseif (!preg_match("/^[a-zA-Z0-9 .,'()&\-\/]+$/", $region)) {
+        $message_region = "<p class=\"text-warning\">Region name contains invalid characters.</p>";
+    }
+
+    if ($message_region != "") {
+        $form_good = FALSE;
+    }
+
+    /*
+        RADIO BUTTONS
+
+        If we give the user radio buttons, checkboxes, a dropdown option (select element), or a range slides, all of the values _should_ be good. 
+
+        However, a bad actor may alter the values of these form controls before submission (or, if we're using the $_GET method, they can muck around with the query string). 
+
+        After our presence check, we're going to see if the value the user submitted is an allowed value.
+    */
+
+    // This is a list of all of our allowed values.
+    $valid_departments = ['traps', 'doomsday', 'monologue', 'it'];
+
+    if (is_blank($department)) {
+        $message_department = "<p class=\"text-warning\">Please select a department.</p>";
+    } elseif (!in_array($department, $valid_departments)) {
+        $message_department = "<p class=\"text-warning\">Invalid department selection.</p>";
+    }
+
+    if ($message_department != "") {
+        $form_good = FALSE;
+    }
+
+    /*
+        CHECKBOXES
+
+        Checkboxes work largely in the same way that radio buttons do, with one key difference: instead of submitting a single value, a user may submit multiple. This means that any time we use checkboxes, we're creating an array. 
+
+        However, we'll throw yet another spanner into the works: this part of the form is optional. This means that if the user hasn't selected anything, they will not fail validation.
+    */
+
+    $valid_training = ['lava', 'sharks', 'lifting', 'buttons', 'hostages', 'evacuation', 'retention'];
+
+    // If the user chose something, we will go into a validation block.
+    if (!is_blank($training)) {
+        // Here, we're checking each value that the user submitted and seeing if it is also inside of our whitelist.
+        foreach ($training as $value) {
+            if (!in_array($value, $valid_training)) {
+                $message_training = "<p class=\"text-warning\">Your value is not allowed. As delightfully evil as that is, please select an answer from the provided list.</p>";
+                $form_good = FALSE;
+                // The moment we find a value that is NOT allowed, we can assign an error message, flip our test boolean, and exit the loop structure.
+                break;
+            }
+        }
+    }
 
 } // end of 'if the user hit submit'
 
 if ($form_good == TRUE) {
     header("Location: thank-you.php");
 }
-
-?>
