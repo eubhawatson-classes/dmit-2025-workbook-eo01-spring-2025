@@ -129,22 +129,22 @@ require('includes/process-form.php');
                         <?php if ($message_department != "") echo $message_department; ?>
 
                         <div class="form-check">
-                            <input type="text" class="form-check-input" id="traps" value="traps" name="department" <?php if (isset($department) && $department == "traps") echo "checked"; ?>>
+                            <input type="radio" class="form-check-input" id="traps" value="traps" name="department" <?php if (isset($department) && $department == "traps") echo "checked"; ?>>
                             <label for="traps" class="form-check-label">Trap-Setting</label>
                         </div>
 
                         <div class="form-check">
-                            <input type="text" class="form-check-input" id="doomsday" value="doomsday" name="department" <?php if (isset($department) && $department == "doomsday") echo "checked"; ?>>
+                            <input type="radio" class="form-check-input" id="doomsday" value="doomsday" name="department" <?php if (isset($department) && $department == "doomsday") echo "checked"; ?>>
                             <label for="doomsday" class="form-check-label">Doomsday Device Maintenance</label>
                         </div>
 
                         <div class="form-check">
-                            <input type="text" class="form-check-input" id="monologue" value="monologue" name="department" <?php if (isset($department) && $department == "monologue") echo "checked"; ?>>
+                            <input type="radio" class="form-check-input" id="monologue" value="monologue" name="department" <?php if (isset($department) && $department == "monologue") echo "checked"; ?>>
                             <label for="monologue" class="form-check-label">Hero Monologue Intrustion</label>
                         </div>
 
                         <div class="form-check">
-                            <input type="text" class="form-check-input" id="it" value="it" name="department" <?php if (isset($department) && $department == "it") echo "checked"; ?>>
+                            <input type="radio" class="form-check-input" id="it" value="it" name="department" <?php if (isset($department) && $department == "it") echo "checked"; ?>>
                             <label for="it" class="form-check-label">IT Help Desk</label>
                         </div>
                     </fieldset>
@@ -199,13 +199,51 @@ require('includes/process-form.php');
 
                     <!-- Range Slider (Likert Scale) -->
 
+                    <fieldset class="mb-4">
+                        <legend class="fs-5">Loyalty to Evil Overlord</legend>
+
+                        <?php if ($message_loyalty != "") echo $message_loyalty; ?>
+
+                        <label for="loyalty" class="form-label">On a scale of 0 through 10, how loyal would you say you are to the current Evil Overlord?</label>
+                        <input type="range" id="loyalty" name="loyalty" step="1" min="0" max="10" class="form-range" value="<?php if ($loyalty != "") echo $loyalty; ?>" aria-describedby="loyalty-value">
+
+                        <!-- This will let the user know what number they are choosing. It will be dynamically updated by JavaScript or on page load by PHP. -->
+                        <p id="loyalty-value" class="form-text text-center text-light">
+                            <span><?php echo isset($_POST['loyalty']) ? $_POST['loyalty'] : 5; ?></span>
+                        </p>
+                    </fieldset>
+
                     <!-- Select/Option (Dropdown) -->
+                     <div class="mb-4">
+                        
+                     <?php if ($message_referral != "") echo $message_referral; ?>
+
+                        <label for="referral" class="form-label">How did you hear about us?</label>
+                        <select name="referral" id="referral" class="form-select">
+                            <option value="" <?php if ($referral == "") echo "selected"; ?> >-- Please Select --</option>
+                            <option value="classified-ad" <?php if ($referral == "classified-ad") echo "selected"; ?> >Craigslist (Evil Jobs Section)</option>
+                            <option value="social-media" <?php if ($referral == "social-media") echo "selected"; ?> >Lava Pit Showcase on TikTok</option>
+                            <option value="word-of-mouth" <?php if ($referral == "word-of-mouth") echo "selected"; ?> >Referral from Another Henchperson</option>
+                            <option value="mixer" <?php if ($referral == "mixer") echo "selected"; ?> >Villain Networking Mixer</option>
+                            <option value="kidnapping" <?php if ($referral == "kidnapping") echo "selected"; ?> >Kidnapped by Your Recruitment Team</option>
+                            <option value="family" <?php if ($referral == "family") echo "selected"; ?> >Family Tradition</option>
+                            <option value="announcement" <?php if ($referral == "announcement") echo "selected"; ?> >Villain's Death Ray Announcement</option>
+                        </select>
+                     </div>
 
                 </section>
 
                 <section class="my-5">
                     <h2 class="fw-light">Long Answer Question</h2>
+                    <p>At Evil Corp.&trade;, we're not just evil doers - we're evil dreamers, too.</p>
+
                     <!-- Textarea -->
+                    <div class="mb-4">
+                        <?php if ($message_evil_plan != "") echo $message_evil_plan; ?>
+
+                        <label for="evil-plan" class="form-label">In 255 characters or fewer, describe your most diabolical plan to date:</label>
+                        <textarea name="evil-plan" id="evil-plan" rows="5" cols="30" placeholder="e.g., sharks with frickin' laser beams attached to their heads ..." class="form-control"><?php if ($evil_plan != "") echo $evil_plan; ?></textarea>
+                    </div>
                 </section>
 
                 <!-- Submit -->

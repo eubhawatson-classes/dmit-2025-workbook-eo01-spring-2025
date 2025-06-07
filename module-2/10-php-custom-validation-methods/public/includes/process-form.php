@@ -265,6 +265,56 @@ if (isset($_POST['submit'])) {
         }
     }
 
+    /*
+        RANGE SLIDER
+
+        A range slider can be very useful for things like surveys, reviews, or anything that might require a Likert Scale.
+
+        However, by defauly, the user will have no idea what value they've chosen. This is why we've added a splash of JS in our code. 
+    */
+
+    if ($loyalty == "" || !is_numeric($loyalty) || $loyalty < 0 || $loyalty > 10) {
+        $message_loyalty = "<p class=\"text-warning\">Please choose a whole number between 0 and 10.</p>";
+        $form_good = FALSE;
+    }
+
+    /*
+        DROPDOWN (<select> Element)
+
+        This is functionally the same as radio buttons. We are looking to see if:
+
+        1. The user chose an option.
+        2. The value they submitted is in our list of allowed values.
+    */
+
+    $valid_referrals = ['classified-ad', 'social-media', 'word-of-mouth', 'mixer', 'kidnapping', 'family', 'announcement'];
+
+    if ($referral == "") {
+        $message_referral = "<p class=\"text-warning\">Please select a referral source.</p>";
+    } elseif (!in_array($referral, $valid_referrals)) {
+        $message_referral = "<p class=\"text-warning\">Invalid referral source. Please choose from the provided options.</p>";
+    }
+
+    if ($message_referral != "") {
+        $form_good = FALSE;
+    }
+
+    /*
+        TEXTAREA
+    */
+
+    if (is_blank($evil_plan)) {
+        $message_evil_plan = "<p class=\"text-warning\">Please write an evil plan.</p>";
+    } elseif (!filter_var($evil_plan, FILTER_SANITIZE_SPECIAL_CHARS)) { // This strip out characters with an ASCII value below 32, which include things like system I/O.
+        $message_evil_plan = "<p class=\"text-warning\">As delightfully diabolical as that was, please write another plan.</p>";
+    } elseif (strlen($evil_plan) < 256) {
+        $message_evil_plan = "<p class=\"text-warning\">Your plan must be 255 chracters or fewer.</p>";
+    }
+
+    if ($message_evil_plan != "") {
+        $form_good = FALSE;
+    }
+
 } // end of 'if the user hit submit'
 
 if ($form_good == TRUE) {
