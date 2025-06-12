@@ -5,7 +5,12 @@
 -- All queries have a certain order to them. This one, which you'll complete with your instructor, creates a table, defines all of its columns, and determines which data type each column will be. We also have to decide whether a column allows null data and what the primary key is. 
 
 CREATE TABLE cities (
-    
+    cid SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    city_name VARCHAR(36) NOT NULL,
+    province ENUM('AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'ON', 'PE', 'QC', 'SK', 'NT', 'NU', 'YT') NOT NULL,
+    population INT UNSIGNED NOT NULL,
+    is_capital BOOLEAN NOT NULL DEFAULT FALSE,
+    trivia VARCHAR(255) NULL
 );
 
 /*
@@ -13,11 +18,27 @@ CREATE TABLE cities (
 
     1. The cid column is defined as an integer (INT) and marked as the primary key (PRIMARY KEY). It also has the AUTO_INCREMENT attribute, which means the values will automatically increment for each new row inserted.
     
+        Note: There are a few different integer sizes. It's important (for the sake of scalability) to reserve as little space as possible when designing a table. 
+
+        ### Numeric Types
+
+| Type              | Description                      | Storage     | Signed Range                              |
+| ----------------- | -------------------------------- | ----------- | ----------------------------------------- |
+| `TINYINT`         | Small integers (booleans, flags) | 1 byte      | -128 to 127                               |
+| `SMALLINT`        | Small whole numbers              | 2 bytes     | -32,768 to 32,767                         |
+| `MEDIUMINT`       | Medium-sized integers            | 3 bytes     | -8.3 million to 8.3 million               |
+| `INT`/`INTEGER`   | Standard whole numbers           | 4 bytes     | -2.1 billion to 2.1 billion               |
+| `BIGINT`          | Very large numbers               | 8 bytes     | ±9 quintillion                            |
+| `DECIMAL(p,s)`    | Fixed-point for precise values   | Varies      | Good for currency, exact decimals         |
+| `FLOAT`, `DOUBLE` | Approximate decimals             | 4 / 8 bytes | Risk of rounding errors (not good for \$) |
+
     2. The city_name column is defined as a variable-length string (VARCHAR) with a maximum length of 36 characters. The NOT NULL constraint ensures that this column must have a value and cannot be left empty.
 
         Note: Why 36 characters? The longest location name in Canada is 'Pekwachnamaykoskwaskwaypinwanik Lake', which is 36 characters long. 
     
-    3. The province column is defined as a variable-length string (VARCHAR) with a length of 3 characters. The NOT NULL constraint is applied to enforce that this column must have a value.
+    3. The province column is defined as an enumerated value (ENUM). Because there are exactly thirteen provinces and territories in Canada, we can clearly define what they are and accept only one of these thirteen values. 
+
+        Note: ENUM is important for the sake of data normalisation. For example, we might see NWT, Nwt, nwt, and NT as equivalents, but our computer systems will see them as distinct entities. 
     
     4. The population column is defined as an integer (INT) with a length of 10 digits. The NOT NULL constraint is applied to ensure this column must have a value.
 
@@ -67,7 +88,7 @@ INSERT INTO cities (city_name, province, population, is_capital, trivia) VALUES
 
 ('Charlottetown', 'PE', 39285, TRUE, 'Birthplace of Canadian Confederation'),
 
-('St. John\'s', 'NL', 110525, TRUE, 'Known for its jellybean-colored row houses'),
+('St. John''s', 'NL', 110525, TRUE, 'Known for its jellybean-colored row houses'),
 
 ('Whitehorse', 'YT', 28376, TRUE, 'Gateway to Canada''s vast wilderness'),
 
