@@ -1,3 +1,10 @@
+<?php
+
+require_once '/home/vwatson/data/connect-eo01.php';
+$connection = db_connect();
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -21,6 +28,23 @@
                 <h2 class="display-4">Questions and Answers</h2>
 
                 <h3 class="mt-4">Question 1: Which city has the highest population?</h3>
+
+                <?php
+                    // This is SQL query we'd like to run in order to find the answer to our question.
+                    $sql = "SELECT city_name, population FROM cities ORDER BY population DESC LIMIT 1;";
+
+                    // Let's run the query and store the result in a PHP variable.
+                    $result = mysqli_query($connection, $sql);
+
+                    // We don't always know whether or not the query was successful or if any data was returned. Let's check to make sure we have at least one record before trying to show it to the user.
+                    if (mysqli_num_rows($result) > 0) {
+                        // If there is at least one record, we need to extract it from the associative array that it arrived in so that we can work with it. 
+                        $row = mysqli_fetch_assoc($result);
+                        echo "<p>The city with the highest population is " . $row['city_name'] . " with a population of " . number_format($row['population']) . ".</p>";
+                    } else {
+                        echo "<p>No cities found.</p>";
+                    }
+                ?>
 
                 <h3 class="mt-4">Question 2: What are the names of all of the cities stored in our database, in alphabetical order?</h3>
 
@@ -46,3 +70,9 @@
         </main>
     </body>
 </html>
+
+<?php
+
+db_disconnect($connection);
+
+?>
