@@ -1,6 +1,9 @@
 <?php
-// Establish a connection to the database
-require_once '/home/vwatson/data/connect-eo01.php';
+// This is the old path, which we used on the student server.
+// require_once '/home/vwatson/data/connect-eo01.php';
+
+// Let's try a new path, used within our Docker environment.
+require_once dirname(__DIR__, 3) . '/data/connect.php';
 $connection = db_connect();
 
 ?>

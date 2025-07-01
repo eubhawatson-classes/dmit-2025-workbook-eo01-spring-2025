@@ -22,7 +22,7 @@ function count_records() {
  */
 function find_records($limit = 12, $offset = 0) {
     global $connection;
-    $sql = "SELECT rank, country FROM happiness_index"; // Make sure you don't terminate the statement yet!
+    $sql = "SELECT `rank`, `country` FROM happiness_index"; // Make sure you don't terminate the statement yet!
 
     if ($limit > 0) {
         $sql .= " LIMIT ?";
