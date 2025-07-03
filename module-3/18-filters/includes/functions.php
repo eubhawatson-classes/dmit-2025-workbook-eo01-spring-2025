@@ -45,4 +45,44 @@ function find_records($limit = 12, $offset = 0) {
     return $statement->get_result();
 }
 
+/**
+ * This function builds a full URL, including a query string with any additional values the user would like to add. This prevents us from losing our application state upon triggering a new HTTP request.
+ */
+function build_query_url($base_url, $filters, $filter, $value) {
+    // Let's start by copying the existing filters into a new variable, $updated_filters. This will allow us to work by passing by reference.
+    $updated_filters = $filters;
+
+    /*
+        We need to check to see if the user has already clicked on this particular filter (and value.)
+
+        isset($updated_filters[$filter]: checks if the filter key exists in the array (so, if the user has clicked on anything from this category yet);
+
+        in_array($value, $updated_filters[$filter]): checks if the value is already present for that filter (so, if the user has clicked on this specific value);
+
+        If the filter (the thing the user is clicking on) exists and already includes the value, we need to remove (toggle OFF) that value.
+    */
+    if (isset($updated_filters[$filter]) && in_array($value, $updated_filters[$filter])) {
+
+        /*
+            array_diff(): This function returns all the elements in the first array that are not present in the second array. Here, it removes $value from the array of values for the specified filter (or category).
+        */
+        $updated_filters[$filter] = array_diff($updated_filters[$filter], [$value]);
+
+        /*
+            We can also remove the category if there are no values / filters currently selected for it.
+        */
+        if (empty($updated_filters[$filter])) {
+            unset($updated_filters[$filter]);
+        }
+
+    } else {
+        // If the user has clicked on something that is NOT currently active (i.e. in the query string), we need to add it (toggle it ON).
+        $updated_filters[$filter][] = $value;
+    }
+
+    // http_build_query(): This method takes our array of selected filters and turns it into a query string.
+    return $base_url . '?' . http_build_query($updated_filters);
+
+}
+
 ?>

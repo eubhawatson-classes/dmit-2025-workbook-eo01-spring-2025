@@ -6,6 +6,7 @@ include 'includes/header.php';
 // Now, we'll see if the user chose any filters (i.e. if any filters are active). We'll start by initialising the array that will hold everything.
 $active_filters = [];
 
+include 'includes/functions.php';
 include 'includes/filter-results.php';
 
 /*
@@ -44,23 +45,29 @@ foreach ($filters as $filter => $options) {
 
     echo '<div class="btn-group mb-3" role="group" aria-label="' . htmlspecialchars($heading) . ' Filter Group">';
 
-        // Now, let's do our inner for each loop. This will generate all of the buttons for the category using all of the key => value pairs.
-        
-        foreach ($options as $value => $label) {
-            // First, let's see whether or not this specific filter/button is active (if the user has pressed it).
-            $is_active = in_array($value, $active_filters[$filter] ?? []);
-        }
+    // Now, let's do our inner for each loop. This will generate all of the buttons for the category using all of the key => value pairs.
+
+    foreach ($options as $value => $label) {
+        // First, let's see whether or not this specific filter/button is active (if the user has pressed it).
+        $is_active = in_array($value, $active_filters[$filter] ?? []);
+        $url = build_query_url($_SERVER["PHP_SELF"], $active_filters, $filter, $value);
+
+        echo '<a href="' . htmlspecialchars($url) .
+            '" class="btn ' . ($is_active ? 'btn-success' : 'btn-outline-success') .
+            '" aria-pressed="' . ($is_active ? 'true' : 'false') . '">' .
+            $label . '</a>';
+    }
 
     echo "</div>";
 }
 
 // If there are any active filters, we'll also give the user a 'clear filters' button. This literally just links to the same page without the query string.
 
-if (!empty($active_filters)) : ?>
-    <div class="my-5">
-        <a href="filters.php" class="btn btn-secondary">Clear Filters</a>
-    </div>
-<?php endif;
+if (!empty($active_filters)) {
+    echo "<div class=\"my-5\"><a href=\"filters.php\" class=\"btn btn-secondary\">Clear Filters</a></div>";
+
+    include 'includes/filter-results.php';
+}
 
 include 'includes/footer.php'
 
