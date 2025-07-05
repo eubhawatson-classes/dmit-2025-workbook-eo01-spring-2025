@@ -18,5 +18,6 @@
 <?php
 
 // Closing our connection.
+db_disconnect($connection);
 
 ?>

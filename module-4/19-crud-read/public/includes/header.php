@@ -1,6 +1,8 @@
 <?php
 
 // Almost every page in this application will have a header, so we will include or require all of our other dependencies here.
+require_once dirname(__DIR__, 4) . '/data/connect.php';
+$connection = db_connect();
 
 include '../private/prepared.php';
 include '../private/functions.php';

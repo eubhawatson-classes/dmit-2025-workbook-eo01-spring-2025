@@ -62,7 +62,8 @@ foreach ($active_filters as $filter => $filter_values) {
             // This makes a list (yet another type of array) out of the user's selected range values. It parses everything before the hyphen and after the hyphen to create a minimum and maximum value.
             list($min, $max) = explode("-", $value, 2);
 
-            $range_queries[] = "$filter BETWEEEN ? AND ?";
+            // TO DO: This line has an error (there are three E's in BETWEEN).
+            $range_queries[] = "$filter BETWEEN ? AND ?";
             $types .= "dd";
             $parameters[] = $min;
             $parameters[] = $max;
