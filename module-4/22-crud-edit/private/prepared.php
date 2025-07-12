@@ -94,4 +94,20 @@ function delete_city($cid) {
     return execute_prepared_statement($query, [$cid], "i");
 }
 
+
+/**
+ * SELECT (retrieve) a specific city by ID; used in the Edit page.
+ * 
+ * @param INT $cid - primary key for a single record
+ * @return array|BOOL|NULL
+ */
+function select_city_by_id($cid) {
+    $query = "SELECT * FROM cities WHERE cid = ?;";
+    $result = execute_prepared_statement($query, [$cid], "i");
+
+    return $result->fetch_assoc();
+}
+
+
+
 ?>
