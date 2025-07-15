@@ -39,8 +39,8 @@
         <legend class="fw-normal fs-6">Is this city the capital of its province or territory?</legend>
 
         <?php
-            // This checks to see whether the user set this city as the capital and, if not, whether this city is a capital as defined by its record in the database. This will resolve as a 1 (yes) or a 0 (no), both of which are treated as strings by PHP.
-            $capital = $_POST['capital'] ?? (isset($city['is_capital']) ? (string) $city['is_capital'] : '0');
+        // This checks to see whether the user set this city as the capital and, if not, whether this city is a capital as defined by its record in the database. This will resolve as a 1 (yes) or a 0 (no), both of which are treated as strings by PHP.
+        $capital = $_POST['capital'] ?? (isset($city['is_capital']) ? (string) $city['is_capital'] : '0');
         ?>
 
         <div class="form-check">
@@ -56,12 +56,15 @@
 
     <!-- Trivia -->
     <div class="mb-4">
-            <label for="trivia" class="form-label">City Trivia (Optional)</label>
-            <input type="text" id="trivia" name="trivia" class="form-control" value="<?= htmlspecialchars($_POST['trivia'] ?? ($city['trivia'] ?? '')); ?>">
-            <p class="form-text">You may add a fun fact or piece of trivia for your city, in 255 characters or fewer.</p>
+        <label for="trivia" class="form-label">City Trivia (Optional)</label>
+        <input type="text" id="trivia" name="trivia" class="form-control" value="<?= htmlspecialchars($_POST['trivia'] ?? ($city['trivia'] ?? '')); ?>">
+        <p class="form-text">You may add a fun fact or piece of trivia for your city, in 255 characters or fewer.</p>
     </div>
 
+    <!-- Hidden Values for Primary Key -->
+    <input type="hidden" name="city-id" id="city-id" value="<?= htmlspecialchars($_GET['city_id'] ?? ($_POST['city-id'] ?? '')) ?>">
+
     <!-- Submit -->
-    <input type="submit" value="Save" name="submit" id="submit" class="btn btn=lg btn-dark my-4">
+    <input type="submit" value="Save" name="submit" id="submit" class="btn btn-dark my-4">
 
 </form>
