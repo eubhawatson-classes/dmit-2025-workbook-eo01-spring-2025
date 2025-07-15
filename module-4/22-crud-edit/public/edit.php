@@ -18,10 +18,10 @@ $exisiting_capital = $city['is_capital'] ?? '0';
 $exisiting_trivia = $city['trivia'] ?? "";
 
 // Finally, we'll initialise variables for all of the values from the user (i.e. whatever they give us in the form).
-$user_city_name = $_POST['city_name'] ?? "";
+$user_city_name = $_POST['city-name'] ?? "";
 $user_province = $_POST['province'] ?? "";
 $user_population = $_POST['population'] ?? "";
-$user_capital = isset($_POST['is_capital']) ? $_POST['is_capital'] : '0';
+$user_capital = isset($_POST['capital']) ? $_POST['capital'] : '0';
 $user_trivia = $_POST['trivia'] ?? "";
 
 $message = "";
@@ -29,7 +29,21 @@ $alert_class = "alert-danger";
 
 // If the user has chosen a city and submitted the form, we will process it here.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // TO DO: Add validation and update logic.
+    $validation_result = validate_city_input($user_city_name, $user_province, $user_population, $user_capital, $user_trivia, $provincial_abbr);
+
+    if ($validation_result['is_valid']) {
+        if (update_city($user_city_name, $user_province, $user_population, $user_capital, $user_trivia, $city_id)) {
+            $message = "{$user_city_name} was successfully updated.";
+            $alert_class = "alert-success";
+
+            // Our form only appears if the city_id (the primary key) is defined. If we get rid of the primary key before we show the user the form, we can prevent multiple/spam submissions.
+            // $city_id = "";
+        } else {
+            $message = "There was error updating the city.";
+        }
+    } else {
+        $message = $validation_result['errors'];
+    }
 }
 
 // If there is a message for the user (either about validation, an error, or successful submission), we'll show it here.

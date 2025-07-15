@@ -5,7 +5,7 @@
     <!-- City Name -->
     <div class="mb-4">
         <label for="city-name" class="form-label">Name</label>
-        <input type="text" id="city-name" name="city-name" class="form-control" value="<?php if (isset($_POST['city-name'])) echo $_POST['city-name']; ?>">
+        <input type="text" id="city-name" name="city-name" class="form-control" value="<?= htmlspecialchars($_POST['city-name'] ?? ($city['city_name'] ?? '')); ?>">
         <p class="form-text">What is the name of your city, town, or village?</p>
     </div>
 
@@ -19,7 +19,7 @@
             // This loop will generate the rest of the options for the user, using the provincial abbreviations array in functions.php (included in the header).
             foreach ($provincial_abbr as $key => $value) {
                 // We'll also check to see if they previously selected a province (in the case of returning to the form to fix an error).
-                $selected = isset($_POST['province']) && $_POST['province'] == $key ? 'selected' : '';
+                $selected = ($_POST['province'] ?? ($city['province'] ?? '')) === $key ? 'selected' : '';
                 echo "<option value=\"$key\" $selected>$value</option>";
             }
 
@@ -30,7 +30,7 @@
     <!-- Population -->
     <div class="mb-4">
         <label for="population" class="form-label">Population</label>
-        <input type="number" name="population" id="population" class="form-control" value="<?php if (isset($_POST['population'])) echo $_POST['population']; ?>">
+        <input type="number" name="population" id="population" class="form-control" value="<?= htmlspecialchars($_POST['population'] ?? ($city['population'] ?? '')); ?>">
         <p class="form-text">What is the approximate population?</p>
     </div>
 
@@ -38,13 +38,18 @@
     <fieldset class="mb-4">
         <legend class="fw-normal fs-6">Is this city the capital of its province or territory?</legend>
 
+        <?php
+            // This checks to see whether the user set this city as the capital and, if not, whether this city is a capital as defined by its record in the database. This will resolve as a 1 (yes) or a 0 (no), both of which are treated as strings by PHP.
+            $capital = $_POST['capital'] ?? (isset($city['is_capital']) ? (string) $city['is_capital'] : '0');
+        ?>
+
         <div class="form-check">
-            <input type="radio" name="capital" id="is-capital" value="1" <?php echo (isset($_POST['capital']) && $_POST['capital'] === '1') ? 'checked' : ''; ?> class="form-check-input">
+            <input type="radio" name="capital" id="is-capital" value="1" class="form-check-input" <?= $capital === '1' ? 'checked' : ''; ?>>
             <label for="is-capital" class="form-check-label">Yes</label>
         </div>
 
         <div class="form-check">
-            <input type="radio" name="capital" id="not-capital" value="0" <?php echo (isset($_POST['capital']) && $_POST['capital'] === '0') ? 'checked' : ''; ?> class="form-check-input">
+            <input type="radio" name="capital" id="not-capital" value="0" class="form-check-input" <?= $capital === '0' ? 'checked' : ''; ?>>
             <label for="not-capital" class="form-check-label">No</label>
         </div>
     </fieldset>
@@ -52,7 +57,7 @@
     <!-- Trivia -->
     <div class="mb-4">
             <label for="trivia" class="form-label">City Trivia (Optional)</label>
-            <input type="text" id="trivia" name="trivia" class="form-control" value="<?php if (isset($_POST['trivia'])) echo $_POST['trivia']; ?>">
+            <input type="text" id="trivia" name="trivia" class="form-control" value="<?= htmlspecialchars($_POST['trivia'] ?? ($city['trivia'] ?? '')); ?>">
             <p class="form-text">You may add a fun fact or piece of trivia for your city, in 255 characters or fewer.</p>
     </div>
 
