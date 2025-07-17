@@ -3,7 +3,16 @@
 // Any time we want to access, use, or modify session data, we need to call this method. If a session already exists, it will allow us access to it; if not, it will start one. However, if it is not included, you will not be able to access your session.
 session_start();
 
-// TO DO: We need some way for PHP to forget us again.
+// We need some way for PHP to forget us again.
+if (isset($_POST['forget'])) {
+    // This method removes all session variables from $_SESSION.
+    session_unset(); 
+    // This goes one step further and destroys any active session.
+    session_destroy();
+
+    // After we're done modifying our session, we can refresh the page.
+    header("Refresh: 0"); // The '0' means we do not wait or delay before refreshing.
+}
 
 if (isset($_POST['form-submit']) && isset($_POST['username'])) {
     // This takes whatever the user provided us with and stores it in our session.
