@@ -10,7 +10,13 @@
 
     <body class="container p-3">
         <header class="text-center my-5">
-            <!-- Navigation will go here. -->
+            <!-- TO DO: When we have authentication set up, we will need to come back and conditionally show these buttons to the user depending upon their login state. -->
+             <nav>
+                <a href="index.php" class="btn btn-dark">Home</a>
+                <a href="admin.php" class="btn btn-outline-secondary">Admin</a>
+                <a href="logout.php" class="btn btn-outline-danger">Log Out</a>
+                <a href="login.php" class="btn btn-outline-success">Log In</a>
+             </nav>
         </header>
         <main class="my-5">
             <!-- Introduction -->
