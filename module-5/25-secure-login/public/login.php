@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         header("Location: admin.php");
         exit();
     } else {
-        // Although it's not best practice to give vague error messages on most web forms, we want to be a little vague here so that the user cannot fish for usernames or email addresses on a secure application. For example, in a banking application, no one else should know an account number.
+        // Although it's not best practice to give vague error messages on most web forms, we want to be a little vague here so that the user cannot fish for usernames or email addresses on a secure application. 
         $error = "Invalid username or password.";
     }
 }
@@ -51,7 +51,7 @@ if (!empty($error)) echo "<p class=\"text-center text-danger\">$error</p>";
     <!-- Password -->
      <div class="mb-3">
         <label for="password" class="form-label">Password:</label>
-        <input type="password" name="password" id="password" class="form-control" required>
+        <input type="text" name="password" id="password" class="form-control" required>
      </div>
 
     <!-- Submit -->

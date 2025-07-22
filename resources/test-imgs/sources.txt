@@ -1,0 +1,78 @@
+# Sources
+
+All images are edited photos from Pexels, a free online stock photography repository. 
+
+Under each image is a title and alternative description that can be used for testing purposes (ex. image gallery application). 
+
+
+## Original Images
+
+16×9 Image
+https://www.pexels.com/photo/scenic-photo-of-turquoise-sea-and-beach-16327792/
+
+Title: Aerial Beach Stroll
+Alt: An overhead view of turquoise waves washing onto a pale sandy shore, with a few people walking and wading where water meets land.
+
+---
+
+9×16 Image
+https://www.pexels.com/photo/a-man-sitting-on-a-street-in-varanasi-16747106/
+
+Title: Teal Veranda Contemplation
+Alt: A tall vertical shot of an older man in a cream shirt and dark trousers sitting cross‑legged on a turquoise‑painted porch, framed by carved columns and Hindi script on the wall below.
+
+---
+
+7×5 Image
+https://www.pexels.com/photo/chocolate-ice-cream-with-almonds-topping-5061215/
+
+Title: Chocolate Almond Indulgence
+Alt: Overhead flat‑lay of a single scoop of chocolate ice cream topped with chopped almonds, resting on a diagonal split of turquoise‑painted wood and brown paper, surrounded by scattered chocolate chunks, whole almonds and a colourful wrapper.
+
+---
+
+5x7 Image
+https://www.pexels.com/photo/exterior-of-a-cute-cafe-11384456/
+
+Title: Sabrossa Street Café
+Alt: Vertical view of a cobblestone‑lined sidewalk café named “Sabrossa”, showing white wrought‑iron chairs with teal cushions and small round tables in front of a weathered brick and teal‑painted façade bearing a circular café sign.
+
+---
+
+5×4 Image
+https://www.pexels.com/photo/gifts-in-plastic-bags-on-table-9937908/
+
+Title: Herbal Tea Sachet Flat‑Lay
+Alt: Top‑down arrangement of clear triangular tea bags filled with dried herbs and fruit slices, scattered among loose blossoms on a rich teal background.
+
+---
+
+4×5 Image
+https://www.pexels.com/photo/vibrant-goldfish-swimming-in-blue-pond-32457733/
+
+Title: Golden School of Fish
+Alt: Vertical view from above of dozens of bright orange goldfish swimming in clear blue‑green water, with light reflections dancing on the surface.
+
+---
+
+3×2 Image
+https://www.pexels.com/photo/wavy-haired-woman-under-the-water-8539543/
+
+Title: Half‑Submerged Portrait
+Alt: A soft‑focus portrait of a woman half‑submerged in water: her eyes and forehead are blurred by ripples at the surface, while her lips, curls and beaded neckline show beneath.
+
+---
+
+2×3 Image
+https://www.pexels.com/photo/two-sailing-boats-near-pier-1260678/
+
+Title: Twin Barges at Dock
+Alt: Aerial vertical shot of two red‑hulled barges tied side by side along a concrete quay, with greenish‑blue water on one side and dusty ground on the other.
+
+---
+
+1×1 Image
+https://www.pexels.com/photo/black-and-silver-camera-3905451/
+
+Title: Vintage FED 3 Camera
+Alt: Square‑format top‑down photo of a silver and black FED 3 film camera resting on a teal notebook, all set on a soft white fur surface.

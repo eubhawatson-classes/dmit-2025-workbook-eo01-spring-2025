@@ -24,4 +24,32 @@ We will also need a table (see `init.sql`) in order to store some metadata for e
 
  <?php
  
- ?>
+$page_title = "Upload Image Files";
+include 'includes/header.php';
+
+?>
+
+<section class="row justify-content-center my-5">
+    <div class="col-md-6">
+        <h1 class="display-4">Upload Image Files</h1>
+        <p class="lead">To add an image to our gallery, fill out the form below and choose an image file from your device to upload to our server.</p>
+        <!-- Link to Gallery Page -->
+        <a href="gallery.php" class="btn btn-dark my-5">View Gallery Page</a>
+
+        <hr class="my-5">
+
+        <!-- Error Message Box -->
+
+        <!-- Preview: If there's a newly created image, we'll show a preview to the user. -->
+
+        <!-- Upload Form -->
+
+    </div>
+</section>
+
+
+<?php
+
+include 'includes/footer.php';
+
+?>

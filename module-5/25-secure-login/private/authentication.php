@@ -20,7 +20,7 @@ $connection = db_connect();
 function authenticate($username, $password) {
     global $connection;
 
-    $statement = $connection->prepare("SELECT * FROM users WHERE users = ?;");
+    $statement = $connection->prepare("SELECT account_id, hashed_pass FROM users WHERE users = ?;");
 
     if (!$statement) {
         // We only want to include error codes and stack traces like this when developing, not in production. 
