@@ -17,7 +17,7 @@ if (isset($_POST['submit']) && !empty($_FILES['img-file']['name'])) {
     // In the real world, we'd also very much validate and sanitise our text-based inputs. For now, we'll focus on the images/files.
 
     $file_name = $_FILES['img-file']['name'];
-    $file_temp_name = $_FILES['img-file']['temp_name'];
+    $file_temp_name = $_FILES['img-file']['tmp_name'];
     $file_size = $_FILES['img-file']['size'];
     $allowed = array('avif', 'jpg', 'jpeg', 'png', 'webp');
 
@@ -119,7 +119,86 @@ if (isset($_POST['submit']) && !empty($_FILES['img-file']['name'])) {
                 $scale_y = $target_height / $height_orig;
                 $scale = max($scale_x, $scale_y);
 
-                
+                // Now that we have the scaling factor, let's make sure the image we have will cover the image we're going to create (i.e. our canvas).
+                $new_width = ceil($width_orig * $scale);
+                $new_height = ceil($height_orig * $scale);
+
+                // Finally, we get to resize the image (stretch or squish it to fill the 'canvas' properly), while maintaining the correct aspect ratio.
+                $temp_image = imagecreatetruecolor($new_width, $new_height);
+
+                // We've got all of our calculations and figured out how large our full-sized image will be and how to place it. So, let's make it.
+                imagecopyresampled($temp_image, $src_image, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
+
+                // The aspect ratio of the original image and the image we're creating may not match up. This means some cropping may occur. We're going to try to minimise the damage by centring the image. 
+                $x_offest = floor(($new_width - $target_width) / 2);
+                $y_offset = floor(($new_height - $target_height) / 2);
+
+                // FINALLY, we can create our 720p image (our full-sized image).
+                $final_image = imagecreatetruecolor($target_width, $target_height);
+                imagecopy($final_image, $temp_image, 0, 0, $x_offest, $y_offset, $target_width, $target_height);
+
+
+                switch ($file_extension) {
+                    case 'avif':
+                        imageavif($final_image, $file_destination);
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        imagejpeg($final_image, $file_destination);
+                        break;
+                    case 'png':
+                        imagepng($final_image, $file_destination);
+                        break;
+                    case 'webp':
+                        imagewebp($final_image, $file_destination);
+                        break;
+                    default:
+                        exit("Unsupported file type. Please upload a AVIF, JPG, JPEG, PNG, or WebP file.");
+                }
+
+                // Now that we've output a full-sized image, we can move on and create our square thumbnail.
+                $thumb_size = 512;
+                $thumb_img = imagecreatetruecolor($thumb_size, $thumb_size);
+                $smaller_side = min($width_orig, $height_orig);
+                $src_x = ($width_orig - $smaller_side) / 2;
+                $src_y = ($height_orig - $smaller_side) / 2;
+                imagecopyresampled($thumb_img, $src_image, 0, 0, $src_x, $src_y, $thumb_size, $thumb_size, $smaller_side, $smaller_side);
+
+                // Let's tell PHP where our thumbnail should go.
+                $thumb_path = "images/thumbs/$file_name_new";
+
+                switch ($file_extension) {
+                    case 'avif':
+                        imageavif($thumb_img, $thumb_path);
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        imagejpeg($thumb_img, $thumb_path);
+                        break;
+                    case 'png':
+                        imagepng($thumb_img, $thumb_path);
+                        break;
+                    case 'webp':
+                        imagewebp($thumb_img, $thumb_path);
+                        break;
+                    default:
+                        exit("Unsupported file type. Please upload a AVIF, JPG, JPEG, PNG, or WebP file.");
+                }
+
+                // As always, we need to free up our memory resources, We currently have FOUR working image objects.
+                imagedestroy($src_image);
+                imagedestroy($temp_image);
+                imagedestroy($final_image);
+                imagedestroy($thumb_img);
+
+                // As our last step, we need to insert all of our metadata into the database so that our gallery script can find everything that it needs to function. 
+                $sql = "INSERT INTO gallery_prep (`title`, `description`, `filename`, `uploaded_on`) VALUES (?, ?, ?, NOW());";
+                $statement = $connection->prepare($sql);
+                $statement->bind_param("sss", $img_title, $img_description, $file_name_new);
+                $statement->execute();
+
+                // If you have issues with your image not being processed, you may want an extra if/else in here to handle potential prepared statement / execution errors. 
+                $message = "Your image was successfully uploaded!";
 
             } else {
                 $message .= "The file size limit is 2MB. Please upload a smaller image file.";
